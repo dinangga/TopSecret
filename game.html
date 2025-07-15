@@ -36,7 +36,11 @@ header{
     justify-content: space-between;
     background: transparent;
     padding: 28px 12%;
-    transition: all .50s ease;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+header.blur {
+    backdrop-filter: blur(10px);
+    background: rgba(34, 34, 34, 0.9);
 }
 .logo {
     display: flex;
