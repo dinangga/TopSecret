@@ -1,9 +1,7 @@
-// Konfigurasi - GANTI DENGAN URL SCRIPT ANDA
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUUoxOrgjXBmmsHL71W8VHfrNa8WLbj9p9TRhWdVVYFvazgQ4J9GYpuWC0XUXCnUWqoA/exec';
-
 // Variabel global
-let posts = [];
-let images = [];
+let posts = JSON.parse(localStorage.getItem('secretPosts')) || [];
+let images = JSON.parse(localStorage.getItem('secretImages')) || [];
+const PASSWORD = "rahasia123"; // Ganti dengan kata kunci yang diinginkan
 
 // Inisialisasi saat halaman dimuat
 document.addEventListener('DOMContentLoaded', function() {
@@ -129,41 +127,32 @@ function initializeCanvas() {
 }
 
 // Fungsi untuk memeriksa kata kunci
-async function checkPassword() {
+function checkPassword() {
     const passwordInput = document.getElementById('passwordInput').value;
     const errorMessage = document.getElementById('errorMessage');
     
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=verifyPassword&password=${encodeURIComponent(passwordInput)}`);
-        const result = await response.json();
-        
-        if (result.success) {
-            grantAccess();
-            localStorage.setItem('isAuthenticated', 'true');
-        } else {
-            errorMessage.textContent = "Kata kunci salah! Coba lagi.";
-            errorMessage.style.display = 'block';
-            
-            // Animasi shake pada input
-            const input = document.getElementById('passwordInput');
-            input.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-                input.style.animation = '';
-            }, 500);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        errorMessage.textContent = "Terjadi kesalahan, coba lagi.";
+    if (passwordInput === PASSWORD) {
+        grantAccess();
+        localStorage.setItem('isAuthenticated', 'true');
+    } else {
+        errorMessage.textContent = "Kata kunci salah! Coba lagi.";
         errorMessage.style.display = 'block';
+        
+        // Animasi shake pada input
+        const input = document.getElementById('passwordInput');
+        input.style.animation = 'shake 0.5s';
+        setTimeout(() => {
+            input.style.animation = '';
+        }, 500);
     }
 }
 
 // Memberikan akses ke konten utama
-async function grantAccess() {
+function grantAccess() {
     document.getElementById('accessOverlay').classList.add('hidden');
     document.getElementById('mainContent').classList.remove('hidden');
-    await loadPosts();
-    await loadGallery();
+    loadPosts();
+    loadGallery();
 }
 
 // Keluar dari akun
@@ -195,7 +184,7 @@ function switchTab(tabName) {
 }
 
 // Membuat postingan baru
-async function createPost() {
+function createPost() {
     const postText = document.getElementById('postText').value.trim();
     const imageInput = document.getElementById('imageUpload');
     
@@ -203,110 +192,86 @@ async function createPost() {
         alert('Masukkan teks atau unggah gambar!');
         return;
     }
-
-    try {
-        const formData = new FormData();
-        const postData = {
-            action: 'createPost',
-            text: postText,
-            date: new Date().toLocaleString('id-ID')
-        };
-
-        // Handle image upload
-        let imageBase64 = '';
-        if (imageInput.files[0]) {
-            imageBase64 = await fileToBase64(imageInput.files[0]);
-            postData.image = imageBase64;
-        }
-
-        const response = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData)
-        });
-
-        const result = await response.json();
-        
-        if (result.success) {
-            // Reset form
+    
+    const newPost = {
+        id: Date.now(),
+        text: postText,
+        date: new Date().toLocaleString('id-ID'),
+        image: null
+    };
+    
+    // Jika ada gambar yang diunggah
+    if (imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            newPost.image = e.target.result;
+            
+            // Simpan gambar ke galeri jika ada
+            if (newPost.image) {
+                images.push({
+                    id: Date.now(),
+                    src: newPost.image,
+                    date: new Date().toLocaleString('id-ID')
+                });
+                localStorage.setItem('secretImages', JSON.stringify(images));
+            }
+            
+            // Simpan postingan
+            posts.unshift(newPost);
+            localStorage.setItem('secretPosts', JSON.stringify(posts));
+            
+            // Reset form dan muat ulang konten
             document.getElementById('postText').value = '';
             document.getElementById('imageUpload').value = '';
-            
-            // Muat ulang postingan
-            await loadPosts();
-            await loadGallery();
+            loadPosts();
+            loadGallery();
             switchTab('posts');
-            
-            alert('Postingan berhasil dibuat!');
-        } else {
-            alert('Error: ' + result.message);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat membuat postingan');
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+    } else {
+        // Simpan postingan tanpa gambar
+        posts.unshift(newPost);
+        localStorage.setItem('secretPosts', JSON.stringify(posts));
+        
+        // Reset form dan muat ulang konten
+        document.getElementById('postText').value = '';
+        loadPosts();
+        switchTab('posts');
     }
 }
 
-// Convert file to Base64
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
+// Memuat postingan
+function loadPosts() {
+    const postsContainer = document.getElementById('postsContainer');
+    
+    if (posts.length === 0) {
+        postsContainer.innerHTML = '<p class="no-posts">Belum ada postingan. Mulai dengan mengunggah sesuatu!</p>';
+        return;
+    }
+    
+    postsContainer.innerHTML = posts.map(post => `
+        <div class="post" data-id="${post.id}">
+            ${post.text ? `<div class="post-text">${post.text}</div>` : ''}
+            ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image" onclick="openModal('${post.image}')">` : ''}
+            <div class="post-date">${post.date}</div>
+        </div>
+    `).join('');
 }
 
-// Memuat postingan dari Google Drive
-async function loadPosts() {
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=getPosts`);
-        const result = await response.json();
-        
-        const postsContainer = document.getElementById('postsContainer');
-        
-        if (!result.success || result.data.length === 0) {
-            postsContainer.innerHTML = '<p class="no-posts">Belum ada postingan. Mulai dengan mengunggah sesuatu!</p>';
-            return;
-        }
-        
-        postsContainer.innerHTML = result.data.map(post => `
-            <div class="post" data-id="${post.id}">
-                ${post.text ? `<div class="post-text">${post.text}</div>` : ''}
-                ${post.imageUrl ? `<img src="https://drive.google.com/uc?export=view&id=${post.imageUrl.split('/d/')[1]?.split('/')[0]}" alt="Post image" class="post-image" onclick="openModal('https://drive.google.com/uc?export=view&id=${post.imageUrl.split('/d/')[1]?.split('/')[0]}')">` : ''}
-                <div class="post-date">${post.date}</div>
-            </div>
-        `).join('');
-    } catch (error) {
-        console.error('Error loading posts:', error);
-        document.getElementById('postsContainer').innerHTML = '<p class="no-posts">Error memuat postingan.</p>';
+// Memuat galeri
+function loadGallery() {
+    const galleryContainer = document.getElementById('galleryContainer');
+    
+    if (images.length === 0) {
+        galleryContainer.innerHTML = '<p class="no-images">Belum ada gambar di galeri.</p>';
+        return;
     }
-}
-
-// Memuat galeri dari Google Drive
-async function loadGallery() {
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=getGallery`);
-        const result = await response.json();
-        
-        const galleryContainer = document.getElementById('galleryContainer');
-        
-        if (!result.success || result.data.length === 0) {
-            galleryContainer.innerHTML = '<p class="no-images">Belum ada gambar di galeri.</p>';
-            return;
-        }
-        
-        galleryContainer.innerHTML = result.data.map(image => `
-            <div class="gallery-item" onclick="openModal('https://drive.google.com/uc?export=view&id=${image.id}')">
-                <img src="https://drive.google.com/uc?export=view&id=${image.id}" alt="Gallery image">
-            </div>
-        `).join('');
-    } catch (error) {
-        console.error('Error loading gallery:', error);
-        document.getElementById('galleryContainer').innerHTML = '<p class="no-images">Error memuat galeri.</p>';
-    }
+    
+    galleryContainer.innerHTML = images.map(image => `
+        <div class="gallery-item" onclick="openModal('${image.src}')">
+            <img src="${image.src}" alt="Gallery image">
+        </div>
+    `).join('');
 }
 
 // Membuka modal gambar
