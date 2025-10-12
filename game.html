@@ -1,102 +1,146 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruang Rahasia Pribadi</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NexusVault | Personal Digital Archive</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Canvas untuk animasi planet -->
-    <canvas id="planetCanvas"></canvas>
-    
-    <!-- Overlay akses -->
-    <div id="accessOverlay" class="overlay">
-        <div class="access-container">
-            <h1>RUANG RAHASIA</h1>
-            <div class="skull-icon">💀</div>
-            <p>Masukkan kata kunci untuk mengakses:</p>
-            <input type="password" id="passwordInput" placeholder="Kata kunci rahasia...">
-            <button id="accessButton">MASUK</button>
-            <p id="errorMessage" class="error"></p>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="logo">
+                <h1>Nexus<span>Vault</span></h1>
+                <p>Secure Personal Archive</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Enter Access Code" required>
+                    <span class="input-glow"></span>
+                </div>
+                <button type="submit" class="btn-login">
+                    <span>Access Vault</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </form>
+            <div class="security-notice">
+                <p>🔒 All data is encrypted client-side before storage</p>
+            </div>
         </div>
     </div>
-    
-    <!-- Konten utama (tersembunyi sampai akses diberikan) -->
-    <div id="mainContent" class="hidden">
-        <!-- Header dengan navbar -->
-        <header>
-            <nav class="navbar">
-                <div class="nav-brand">
-                    <span class="skull">💀</span>
-                    <h2>RUANG RAHASIA</h2>
-                    <span class="skull">💀</span>
-                </div>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" data-tab="posts">Postingan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-tab="upload">Unggah Baru</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-tab="gallery">Galeri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" id="logoutButton" class="nav-link logout">Keluar</a>
-                    </li>
-                </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="screen">
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo-small">Nexus<span>Vault</span></h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="notes">Notes</button>
+                <button class="nav-btn" data-section="files">Files</button>
             </nav>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
         </header>
 
-        <!-- Konten tab -->
-        <main class="container">
-            <!-- Tab Postingan -->
-            <section id="posts" class="tab-content active">
-                <h2 class="section-title">Postingan Rahasia</h2>
-                <div id="postsContainer" class="posts-container">
-                    <!-- Postingan akan ditampilkan di sini -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section active">
+                <div class="welcome-banner">
+                    <h2>Welcome to Your Digital Vault</h2>
+                    <p>All your notes and files are securely encrypted and stored</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3 id="notes-count">0</h3>
+                            <p>Encrypted Notes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🖼️</div>
+                        <div class="stat-info">
+                            <h3 id="files-count">0</h3>
+                            <p>Secure Files</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔐</div>
+                        <div class="stat-info">
+                            <h3>AES-256</h3>
+                            <p>Encryption Level</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="activity-list" class="activity-list">
+                        <!-- Recent activity items will be populated here -->
+                    </div>
                 </div>
             </section>
 
-            <!-- Tab Unggah -->
-            <section id="upload" class="tab-content">
-                <h2 class="section-title">Unggah Konten Baru</h2>
-                <div class="upload-form">
-                    <div class="form-group">
-                        <label for="postText">Teks Rahasia</label>
-                        <textarea id="postText" placeholder="Tulis sesuatu yang rahasia..."></textarea>
+            <!-- Notes Section -->
+            <section id="notes-section" class="content-section">
+                <div class="section-header">
+                    <h2>Secure Notes</h2>
+                    <button id="newNoteBtn" class="btn-primary">
+                        <span>+ New Note</span>
+                    </button>
+                </div>
+                
+                <div class="notes-container">
+                    <div class="notes-list" id="notesList">
+                        <!-- Notes will be populated here -->
                     </div>
-                    <div class="form-group">
-                        <label for="imageUpload">Unggah Gambar (Opsional)</label>
-                        <input type="file" id="imageUpload" accept="image/*">
+                    
+                    <div class="note-editor" id="noteEditor">
+                        <div class="editor-header">
+                            <input type="text" id="noteTitle" placeholder="Note Title">
+                            <div class="editor-actions">
+                                <button id="saveNoteBtn" class="btn-primary">Save</button>
+                                <button id="deleteNoteBtn" class="btn-secondary">Delete</button>
+                            </div>
+                        </div>
+                        <textarea id="noteContent" placeholder="Write your secure note here..."></textarea>
                     </div>
-                    <button id="submitPost" class="submit-btn">POSTING</button>
                 </div>
             </section>
 
-            <!-- Tab Galeri -->
-            <section id="gallery" class="tab-content">
-                <h2 class="section-title">Galeri Rahasia</h2>
-                <div id="galleryContainer" class="gallery-container">
-                    <!-- Gambar akan ditampilkan di sini -->
+            <!-- Files Section -->
+            <section id="files-section" class="content-section">
+                <div class="section-header">
+                    <h2>Secure Files</h2>
+                    <div class="file-actions">
+                        <label for="fileUpload" class="btn-primary">
+                            <span>Upload File</span>
+                        </label>
+                        <input type="file" id="fileUpload" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="files-grid" id="filesGrid">
+                    <!-- Files will be populated here -->
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Modal untuk gambar -->
-    <div id="imageModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <p>Encrypting & Syncing...</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
