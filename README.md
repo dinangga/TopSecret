@@ -5,7 +5,7 @@
 🌱 *"First time here? Awesome! I'm Ray aji and I share my development experiences here."*  
 💡 *"Come back often - I update this monthly with new learnings!"*
 
-👉 [To Beranda profile](./game.html)
+👉 [To Beranda profile](./home.html)
 
 [![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=rayaji.profile)](https://github.com/rayaji)
 
