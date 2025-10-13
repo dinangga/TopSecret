@@ -3,145 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusVault | Personal Digital Archive</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="screen active">
-        <div class="login-container">
-            <div class="logo">
-                <h1>Nexus<span>Vault</span></h1>
-                <p>Secure Personal Archive</p>
-            </div>
-            <form id="loginForm" class="login-form">
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Enter Access Code" required>
-                    <span class="input-glow"></span>
-                </div>
-                <button type="submit" class="btn-login">
-                    <span>Access Vault</span>
-                    <div class="btn-glow"></div>
-                </button>
-            </form>
-            <div class="security-notice">
-                <p>🔒 All data is encrypted client-side before storage</p>
-            </div>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-brand">My Portfolio</div>
+        <div class="nav-links">
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </div>
-    </div>
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+    </nav>
 
-    <!-- Main Dashboard -->
-    <div id="dashboard" class="screen">
-        <header class="header">
-            <div class="header-left">
-                <h1 class="logo-small">Nexus<span>Vault</span></h1>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Hello, I'm <span class="name-highlight">Alex Developer</span></h1>
+            <div class="typewriter">
+                <span id="type-text"></span><span class="cursor">|</span>
             </div>
-            <nav class="nav">
-                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
-                <button class="nav-btn" data-section="notes">Notes</button>
-                <button class="nav-btn" data-section="files">Files</button>
-            </nav>
-            <div class="header-right">
-                <button id="logoutBtn" class="btn-logout">Logout</button>
-            </div>
-        </header>
-
-        <main class="main-content">
-            <!-- Dashboard Section -->
-            <section id="dashboard-section" class="content-section active">
-                <div class="welcome-banner">
-                    <h2>Welcome to Your Digital Vault</h2>
-                    <p>All your notes and files are securely encrypted and stored</p>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">📝</div>
-                        <div class="stat-info">
-                            <h3 id="notes-count">0</h3>
-                            <p>Encrypted Notes</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🖼️</div>
-                        <div class="stat-info">
-                            <h3 id="files-count">0</h3>
-                            <p>Secure Files</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🔐</div>
-                        <div class="stat-info">
-                            <h3>AES-256</h3>
-                            <p>Encryption Level</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="recent-activity">
-                    <h3>Recent Activity</h3>
-                    <div id="activity-list" class="activity-list">
-                        <!-- Recent activity items will be populated here -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Notes Section -->
-            <section id="notes-section" class="content-section">
-                <div class="section-header">
-                    <h2>Secure Notes</h2>
-                    <button id="newNoteBtn" class="btn-primary">
-                        <span>+ New Note</span>
-                    </button>
-                </div>
-                
-                <div class="notes-container">
-                    <div class="notes-list" id="notesList">
-                        <!-- Notes will be populated here -->
-                    </div>
-                    
-                    <div class="note-editor" id="noteEditor">
-                        <div class="editor-header">
-                            <input type="text" id="noteTitle" placeholder="Note Title">
-                            <div class="editor-actions">
-                                <button id="saveNoteBtn" class="btn-primary">Save</button>
-                                <button id="deleteNoteBtn" class="btn-secondary">Delete</button>
-                            </div>
-                        </div>
-                        <textarea id="noteContent" placeholder="Write your secure note here..."></textarea>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Files Section -->
-            <section id="files-section" class="content-section">
-                <div class="section-header">
-                    <h2>Secure Files</h2>
-                    <div class="file-actions">
-                        <label for="fileUpload" class="btn-primary">
-                            <span>Upload File</span>
-                        </label>
-                        <input type="file" id="fileUpload" style="display: none;">
-                    </div>
-                </div>
-                
-                <div class="files-grid" id="filesGrid">
-                    <!-- Files will be populated here -->
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-spinner">
-            <div class="spinner-ring"></div>
-            <p>Encrypting & Syncing...</p>
+            <p>Full-Stack Developer passionate about building amazing web experiences</p>
+            <button class="cta-button" onclick="downloadCV()">Download CV</button>
         </div>
-    </div>
+    </header>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2>My Projects</h2>
+        <div class="projects-grid" id="projects-grid">
+            <!-- Projects will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Simple Journal -->
+    <section id="journal" class="section">
+        <h2>My Notes</h2>
+        <div class="journal">
+            <textarea id="note-input" placeholder="Write your notes here..."></textarea>
+            <button onclick="saveNote()" class="save-btn">Save Note</button>
+            <div id="notes-list" class="notes-list"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 My Portfolio. Built with simplicity.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
