@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mochi Robot - Belajar Coding Jadi Lebih Menyenangkan</title>
-    <!-- Menggunakan Font Google: Nunito untuk kesan yang bulat dan ramah -->
+    <title>NOVA Robot - Jam Pintar Generasi Baru</title>
+    <!-- Font Google: Nunito -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Menggunakan FontAwesome untuk Ikon -->
+    <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-pink: #020873;
-            --secondary-pink: #0455BF;
-            --accent-yellow: #04B2D9;
-            --soft-blue: #C7CEEA;
+            /* Warna-warna baru sesuai request user (Tema Biru/Cyber) */
+            --primary-pink: #020873;       /* Biru Gelap Utama */
+            --secondary-pink: #0455BF;     /* Biru Terang */
+            --accent-yellow: #04B2D9;      /* Cyan/Sky Blue */
+            --soft-blue: #C7CEEA;          /* Ungu Pudar/Lavender */
             --text-dark: #4A4A4A;
             --text-light: #7A7A7A;
             --white: #FFFFFF;
             --bg-color: #FFFDF9;
-            --shadow: 0 10px 30px rgba(255, 154, 162, 0.2);
+            --shadow: 0 10px 30px rgba(4, 85, 191, 0.2); /* Shadow biru */
             --radius: 25px;
         }
 
@@ -79,7 +80,7 @@
         /* --- HEADER & NAVIGATION --- */
         header {
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 20px 0;
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -91,6 +92,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative; /* Penting untuk positioning menu mobile */
         }
 
         .logo {
@@ -100,6 +102,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            z-index: 1001;
         }
 
         .logo i {
@@ -109,6 +112,7 @@
         .nav-links {
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -118,7 +122,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--primary-pink);
+            color: var(--secondary-pink);
         }
 
         .cta-btn {
@@ -127,12 +131,22 @@
             padding: 12px 28px;
             border-radius: 50px;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 154, 162, 0.4);
+            box-shadow: 0 4px 15px rgba(4, 8, 115, 0.3); /* Shadow biru gelap */
         }
 
         .cta-btn:hover {
-            background-color: #ff808b;
+            background-color: var(--secondary-pink);
             transform: translateY(-2px);
+            color: white;
+        }
+
+        /* --- TOGGLE MENU (HAMBURGER) --- */
+        .hamburger {
+            display: none; /* Sembunyi di desktop */
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-pink);
+            z-index: 1001;
         }
 
         /* --- HERO SECTION --- */
@@ -145,7 +159,6 @@
             overflow: hidden;
         }
 
-        /* Decorative Background Blobs */
         .blob {
             position: absolute;
             border-radius: 50%;
@@ -176,7 +189,7 @@
 
         .tagline {
             background-color: var(--accent-yellow);
-            color: var(--text-dark);
+            color: white; /* Supaya kontras dengan background kuning terang */
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: 700;
@@ -231,7 +244,6 @@
             width: 100%;
             max-width: 500px;
             border-radius: var(--radius);
-            /* Placeholder styling to look like a product shot */
             object-fit: cover;
             box-shadow: var(--shadow);
             transform: rotate(3deg);
@@ -427,12 +439,48 @@
             font-size: 0.9rem;
         }
 
-        /* --- RESPONSIVE --- */
+        /* --- RESPONSIVE / MOBILE STYLE --- */
         @media (max-width: 768px) {
+            .hamburger {
+                display: block; /* Munculkan tombol hamburger */
+            }
+
             .nav-links {
-                display: none; /* Simple hiding for mobile demo */
+                position: absolute;
+                top: 70px; /* Turun sedikit di bawah header */
+                right: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 40px 0;
+                
+                /* Default state: Sembunyi */
+                display: none; 
+                
+                /* Animasi halus saat muncul */
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            /* Class 'active' yang akan ditambahkan oleh JS */
+            .nav-links.active {
+                display: flex;
+            }
+
+            /* Hide the desktop CTA button because we will use a link inside the nav */
+            .cta-btn.desktop-cta {
+                display: none; 
             }
             
+            /* Styling khusus untuk link CTA di dalam menu mobile */
+            .nav-links .mobile-cta-link {
+                background-color: var(--primary-pink);
+                color: white;
+                padding: 10px 30px;
+                border-radius: 50px;
+            }
+
             .hero {
                 flex-direction: column-reverse;
                 text-align: center;
@@ -464,13 +512,23 @@
                 <div class="logo">
                     <i class="fa-solid fa-robot"></i> <b>NOVA</b>
                 </div>
-                <ul class="nav-links">
+                
+                <!-- Tombol Hamburger untuk Mobile -->
+                <div class="hamburger" id="hamburger-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+
+                <ul class="nav-links" id="nav-links">
                     <li><a href="#fitur">Fitur</a></li>
                     <li><a href="#cara-kerja">Cara Kerja</a></li>
                     <li><a href="#galeri">Galeri</a></li>
                     <li><a href="#testimoni">Testimoni</a></li>
+                    <!-- Tombol CTA khusus Mobile (hanya muncul di dalam list menu saat di HP) -->
+                    <li><a href="#beli" class="mobile-cta-link">Beli Sekarang</a></li>
                 </ul>
-                <a href="#beli" class="cta-btn">Beli Sekarang</a>
+
+                <!-- Tombol CTA untuk Desktop -->
+                <a href="#beli" class="cta-btn desktop-cta">Beli Sekarang</a>
             </nav>
         </div>
     </header>
@@ -491,7 +549,7 @@
             </div>
             <div class="hero-image">
                 <!-- Menggunakan Picsum dengan seed 'robot' untuk gambar placeholder yang relevan -->
-                <img src="https://picsum.photos/seed/robottoy/600/600" alt="Mochi Robot Toy" width="600" height="600">
+                <img src="https://picsum.photos/seed/robottoy/600/600" alt="NOVA Robot Toy" width="600" height="600">
             </div>
         </div>
     </section>
@@ -515,7 +573,7 @@
                     <div class="icon-box">
                         <i class="fa-solid fa-puzzle-piece"></i>
                     </div>
-                    <h3>LYRA Berbasis ESP32s3</h3>
+                    <h3>NOVA Berbasis ESP32s3</h3>
                     <p>NOVA Menggunakan hardware yang cukup powerful dan tangguh, jadi kalian teidak perlu khawatir ia akan cepat rusak.</p>
                 </article>
 
@@ -592,7 +650,7 @@
                     <img src="https://picsum.photos/seed/familyplay/400/300" alt="Orang tua dan anak">
                     <div class="overlay">
                         <h4>Waktu Bersama</h4>
-                        <p>LYRA akan membuat waktu yang membosankan mu terasa menyenangkan.</p>
+                        <p>NOVA akan membuat waktu yang membosankan mu terasa menyenangkan.</p>
                     </div>
                 </div>
             </div>
@@ -604,7 +662,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h1>LYRA</h1>
+                    <h1>NOVAA</h1>
                     <p>Membangun masa depan dengan logika, kreativitas, dan kebahagiaan. Satu blok kode dalam satu waktu.</p>
                 </div>
                 <div class="footer-links">
@@ -639,5 +697,35 @@
         </div>
     </footer>
 
+    <!-- Script JavaScript untuk Menu Mobile -->
+    <script>
+        const hamburger = document.getElementById('hamburger-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        // Fungsi untuk membuka/tutup menu
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Mengubah ikon hamburger menjadi 'X' saat terbuka (opsional, tapi bagus UX)
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark'); // Ikon silang
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Menutup menu saat salah satu link diklik (UX yang lebih baik)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
+        });
+    </script>
 </body>
 </html>
