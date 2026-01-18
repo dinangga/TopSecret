@@ -23,8 +23,8 @@
 # About
 📅 **© 24 June 2025**  
 🔗 **Quick Links:**  
-[About Me](./profile/profile.html)  
-[Projects](./profile/home.html)  
+[About Me](http//:dinangga.github.io/profile/profile.html)  
+[Projects](http//:dinangga.github.io/profile/home.html)  
 [Contact] techmoto.id@gmail.com  
 
 **feedback:** [email] -techmoto.id@gmail.com-
