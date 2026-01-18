@@ -1,59 +1,643 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
+    <title>Mochi Robot - Belajar Coding Jadi Lebih Menyenangkan</title>
+    <!-- Menggunakan Font Google: Nunito untuk kesan yang bulat dan ramah -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Menggunakan FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-pink: #020873;
+            --secondary-pink: #0455BF;
+            --accent-yellow: #04B2D9;
+            --soft-blue: #C7CEEA;
+            --text-dark: #4A4A4A;
+            --text-light: #7A7A7A;
+            --white: #FFFFFF;
+            --bg-color: #FFFDF9;
+            --shadow: 0 10px 30px rgba(255, 154, 162, 0.2);
+            --radius: 25px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-pink);
+        }
+
+        .cta-btn {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 154, 162, 0.4);
+        }
+
+        .cta-btn:hover {
+            background-color: #ff808b;
+            transform: translateY(-2px);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 90vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Background Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+        }
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary-pink);
+            top: -100px;
+            right: -100px;
+            opacity: 0.5;
+        }
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--soft-blue);
+            bottom: 0;
+            left: -50px;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .tagline {
+            background-color: var(--accent-yellow);
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero h1 span {
+            color: var(--primary-pink);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-pink);
+            color: var(--primary-pink);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            /* Placeholder styling to look like a product shot */
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            transform: rotate(3deg);
+            border: 8px solid var(--white);
+        }
+
+        /* --- FEATURES SECTION --- */
+        .features {
+            background-color: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-color);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary-pink);
+            box-shadow: var(--shadow);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--primary-pink);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* --- HOW IT WORKS --- */
+        .how-it-works {
+            background-color: var(--soft-blue);
+            background-image: linear-gradient(135deg, #C7CEEA 0%, #E2E8F0 100%);
+            color: var(--text-dark);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .step-item {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.6);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px 20px;
+            border-radius: var(--radius);
+            backdrop-filter: blur(5px);
+        }
+
+        .step-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 20px;
+            color: white;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--white);
+            padding: 60px 0 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-brand h2 {
+            color: var(--primary-pink);
+            margin-bottom: 15px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-light);
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary-pink);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Simple hiding for mobile demo */
+            }
+            
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image img {
+                margin-bottom: 30px;
+                transform: rotate(0);
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-brand">My Portfolio</div>
-        <div class="nav-links">
-            <a href="#projects">Projects</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <button id="theme-toggle" class="theme-btn">🌙</button>
-    </nav>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Hello, I'm <span class="name-highlight">Alex Developer</span></h1>
-            <div class="typewriter">
-                <span id="type-text"></span><span class="cursor">|</span>
-            </div>
-            <p>Full-Stack Developer passionate about building amazing web experiences</p>
-            <button class="cta-button" onclick="downloadCV()">Download CV</button>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fa-solid fa-robot"></i> MochiRobot
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#fitur">Fitur</a></li>
+                    <li><a href="#cara-kerja">Cara Kerja</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                    <li><a href="#testimoni">Testimoni</a></li>
+                </ul>
+                <a href="#beli" class="cta-btn">Beli Sekarang</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <h2>My Projects</h2>
-        <div class="projects-grid" id="projects-grid">
-            <!-- Projects will be loaded here -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="container" style="display: flex; width: 100%; flex-wrap: wrap; align-items: center;">
+            <div class="hero-content">
+                <span class="tagline">Edukasi STEM Generasi Baru</span>
+                <h1>Teman di Saat Bosan<span>Keren & Pintar</span></h1>
+                <p>Perkenalkan LYRA, cara paling menyenangkan menghilangkan bosan. Aman, interaktif, dan di lengkapi jam.</p>
+                <div class="hero-buttons">
+                    <a href="#beli" class="cta-btn">Dapatkan Mochi</a>
+                    <a href="#demo" class="btn-outline">Lihat Demo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Menggunakan Picsum dengan seed 'robot' untuk gambar placeholder yang relevan -->
+                <img src="https://picsum.photos/seed/robottoy/600/600" alt="Mochi Robot Toy" width="600" height="600">
+            </div>
         </div>
     </section>
 
-    <!-- Simple Journal -->
-    <section id="journal" class="section">
-        <h2>My Notes</h2>
-        <div class="journal">
-            <textarea id="note-input" placeholder="Write your notes here..."></textarea>
-            <button onclick="saveNote()" class="save-btn">Save Note</button>
-            <div id="notes-list" class="notes-list"></div>
+    <!-- Features Section -->
+    <section id="fitur" class="features">
+        <div class="container">
+            <h2 class="section-title">Kenapa LYRA?</h2>
+            <p class="section-subtitle">LYRA di ciptakan untuk menghilangkan bosan saat sendiri ataupun menemani kalian di saat denang dan sedih.</p>
+            
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h3>100% Buatan anak SMK</h3>
+                    <p>Melindungi kalian dari rasa bosan. LYRA sudah di lengkapi microfon, speaker, layar-oled dan real-time-clock(RTC) untuk menampilkan jam. kami jamin kalian tidak akan bosan.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <h3>LYRA Berbasis ESP32s3</h3>
+                    <p>LYRA Menggunakan hardware yang cukup powerful dan tangguh, jadi kalian teidak perlu khawatir ia akan cepat rusak.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-shapes"></i>
+                    </div>
+                    <h3>Bahan kuat dan simple</h3>
+                    <p>Terbuat dari plastik ABS uk dan dikencangkan dengan baut stainless. Dirancang agar aman dipegang oleh tangan dan aman ketika terjatuh.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="cara-kerja" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--text-dark);">Cara Kerja LYRA</h2>
+            <p class="section-subtitle" style="color: var(--text-dark);">Hanya butuh 3 langkah sederhana untuk memulai petualangan dengan LYRA.</p>
+
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Hidupkan LYRA</h4>
+                        <p>Tekan tombol switc yang sudah di sediankan pada belakangnya.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Pilih Menu LYRA</h4>
+                        <p>Tekan tobol hijau berbergambar anak panah"(<-)" dan "(->)" agar dapat bergerak untuk memilih menu, lalu tekan tobol 'kecil' di bawah layar untuk pilih menu.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Eksekusi!</h4>
+                        <p>LYRA akan merespon mu sesuai seberapa tinggi suara sesuai perintahmu. misal kamu teriak dia akan menunjukan emoji tutup kuping.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeri">
+        <div class="container">
+            <h2 class="section-title">Galeri Kegiatan</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/seed/kidslearning/400/300" alt="Anak bermain robot">
+                    <div class="overlay">
+                        <h4>Sesi Belajar Kelompok</h4>
+                        <p>Kolaborasi seru bersama teman.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/seed/codingblocks/400/300" alt="Susunan blok kode">
+                    <div class="overlay">
+                        <h4>Logika Algoritma</h4>
+                        <p>Belajar pola berpikir terstruktur dan kritis.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/seed/robotface/400/300" alt="Wajah robot Mochi">
+                    <div class="overlay">
+                        <h4>Ekspresi LYRA</h4>
+                        <p>Robot yang reaktif dan lucu.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/seed/familyplay/400/300" alt="Orang tua dan anak">
+                    <div class="overlay">
+                        <h4>Waktu Bersama</h4>
+                        <p>LYRA akan membuat waktu yang membosankan mu terasa menyenangkan.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 My Portfolio. Built with simplicity.</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h1>LYRA</h1>
+                    <p>Membangun masa depan dengan logika, kreativitas, dan kebahagiaan. Satu blok kode dalam satu waktu.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Produk</h4>
+                    <ul>
+                        <li><a href="#">Robot LYRA</a></li>
+                        <li><a href="#">Ekspansi Paket</a></li>
+                        <li><a href="#">Buku Panduan LYRA</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Dukungan</h4>
+                    <ul>
+                        <li><a href="https://www.instagram.com/dinanggaa/">feedback</a></li>
+                        <li><a href="#">Hubungi Kami</a></li>
+                        <li><a href="README.md">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Sosial Media</h4>
+                    <ul>
+                        <li><a href="https://www.instagram.com/dinanggaa/"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                        <li><a href="https://www.youtube.com/@kastaword"><i class="fa-brands fa-youtube"></i> YouTube</a></li>
+                        <li><a href="https://x.com/Rayaji125948"><i class="fa-brands fa-twitter"></i> Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 LYRA Robot. All rights reserved. Design by "SMK3 Perguruan 'CIKINI'".
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>
