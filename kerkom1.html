@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi NOVA - Kerkom 1</title>
+    <!-- Font Google: Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #020873;
+            --secondary-pink: #0455BF;
+            --accent-yellow: #04B2D9;
+            --soft-blue: #C7CEEA;
+            --white: #FFFFFF;
+            --text-dark: #4A4A4A;
+            --text-light: #7A7A7A;
+            --shadow: 0 10px 30px rgba(4, 85, 191, 0.2);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header Kerkom */
+        .kerkom-header {
+            background: var(--primary-pink);
+            color: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-content h1 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-content h1 i {
+            color: var(--accent-yellow);
+        }
+
+        .back-btn {
+            background: var(--accent-yellow);
+            color: var(--primary-pink);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid transparent;
+        }
+
+        .back-btn:hover {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--accent-yellow);
+            transform: translateX(-5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            margin-bottom: 40px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            background: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            border: 2px solid transparent;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-pink);
+            color: var(--white);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(4, 85, 191, 0.3);
+            border-color: var(--accent-yellow);
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .gallery-card {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(4, 85, 191, 0.3);
+        }
+
+        .card-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(2, 8, 115, 0.9), transparent);
+            padding: 20px;
+            color: var(--white);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-card:hover .image-overlay {
+            transform: translateY(0);
+        }
+
+        .image-overlay p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .image-overlay i {
+            color: var(--accent-yellow);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .card-content p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--soft-blue);
+            color: var(--primary-pink);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Modal untuk Zoom Gambar */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-yellow);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .kerkom-footer {
+            background: var(--primary-pink);
+            color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .page-title h2 {
+                font-size: 2rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="kerkom-header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fa-solid fa-camera-retro"></i>
+                    Kerkom 1 - Dokumentasi NOVA
+                </h1>
+                <a href="index.html" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Title -->
+            <div class="page-title">
+                <h2>Galeri Dokumentasi NOVA</h2>
+                <p>Kumpulan foto-foto proses pembuatan, pengembangan, dan kegiatan seru bersama NOVA</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Semua</button>
+                    <button class="filter-btn" data-filter="proses">Proses Pembuatan</button>
+                    <button class="filter-btn" data-filter="kegiatan">Kegiatan</button>
+                    <button class="filter-btn" data-filter="tim">Tim</button>
+                    <button class="filter-btn" data-filter="presentasi">Presentasi</button>
+                </div>
+            </div>
+
+            <!-- Loading Animation -->
+            <div class="loading" id="loading">
+                <i class="fa-solid fa-circle-notch"></i>
+                <p>Memuat gambar...</p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-container" id="galleryContainer">
+                <!-- Konten akan diisi oleh JavaScript -->
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalFoto">0</div>
+                        <div class="stat-label">Total Foto</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalProses">0</div>
+                        <div class="stat-label">Proses Pembuatan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalKegiatan">0</div>
+                        <div class="stat-label">Kegiatan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalTim">0</div>
+                        <div class="stat-label">Anggota Tim</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal untuk Zoom Gambar -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <img src="" alt="Zoomed Image" id="modalImage">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="kerkom-footer">
+        <div class="container">
+            <p>&copy; 2026 NOVA Robot - Dokumentasi Kerkom 1. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data gambar dokumentasi
+        const galleryData = [
+            {
+                id: 1,
+                title: "Perakitan PCB Utama",
+                description: "Proses pemasangan komponen SMD pada PCB utama NOVA menggunakan hot air gun",
+                image: "https://picsum.photos/seed/assembly1/800/600",
+                category: "proses",
+                tags: ["PCB", "Soldering", "SMD"],
+                date: "15 Jan 2026"
+            },
+            {
+                id: 2,
+                title: "Tim Developer NOVA",
+                description: "Foto bersama tim pengembang NOVA setelah berhasil menyelesaikan prototipe pertama",
+                image: "https://picsum.photos/seed/teamphoto/800/600",
+                category: "tim",
+                tags: ["Team", "Developer", "SMK"],
+                date: "20 Jan 2026"
+            },
+            {
+                id: 3,
+                title: "Uji Coba Sensor Suara",
+                description: "Pengujian respons sensor suara terhadap berbagai tingkat kebisingan",
+                image: "https://picsum.photos/seed/testing1/800/600",
+                category: "proses",
+                tags: ["Testing", "Sensor", "Audio"],
+                date: "25 Jan 2026"
+            },
+            {
+                id: 4,
+                title: "Workshop Robotik",
+                description: "Sosialisasi NOVA kepada siswa-siswi SMK dalam workshop robotik",
+                image: "https://picsum.photos/seed/workshop1/800/600",
+                category: "kegiatan",
+                tags: ["Workshop", "Edukasi", "Siswa"],
+                date: "5 Feb 2026"
+            },
+            {
+                id: 5,
+                title: "Presentasi di Pameran",
+                description: "Tim NOVA mempresentasikan produk di pameran teknologi pendidikan",
+                image: "https://picsum.photos/seed/presentation1/800/600",
+                category: "presentasi",
+                tags: ["Pameran", "Presentasi", "Publik"],
+                date: "12 Feb 2026"
+            },
+            {
+                id: 6,
+                title: "3D Printing Casing",
+                description: "Proses pencetakan casing NOVA menggunakan printer 3D",
+                image: "https://picsum.photos/seed/3dprint/800/600",
+                category: "proses",
+                tags: ["3D Printing", "Casing", "Produksi"],
+                date: "18 Feb 2026"
+            },
+            {
+                id: 7,
+                title: "Bermain Bersama NOVA",
+                description: "Anak-anak sedang asyik bermain dan berinteraksi dengan NOVA",
+                image: "https://picsum.photos/seed/playtime/800/600",
+                category: "kegiatan",
+                tags: ["Interaksi", "Anak-anak", "Fun"],
+                date: "1 Mar 2026"
+            },
+            {
+                id: 8,
+                title: "Diskusi Teknis",
+                description: "Diskusi tim untuk menyelesaikan bug pada firmware NOVA",
+                image: "https://picsum.photos/seed/discussion/800/600",
+                category: "tim",
+                tags: ["Diskusi", "Problem Solving", "Kolaborasi"],
+                date: "10 Mar 2026"
+            }
+        ];
+
+        // DOM Elements
+        const galleryContainer = document.getElementById('galleryContainer');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const loading = document.getElementById('loading');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+
+        // Stats Elements
+        const totalFotoEl = document.getElementById('totalFoto');
+        const totalProsesEl = document.getElementById('totalProses');
+        const totalKegiatanEl = document.getElementById('totalKegiatan');
+        const totalTimEl = document.getElementById('totalTim');
+
+        // Current filter
+        let currentFilter = 'all';
+
+        // Initialize gallery
+        function initGallery() {
+            renderGallery(galleryData);
+            updateStats();
+        }
+
+        // Render gallery items
+        function renderGallery(items) {
+            loading.style.display = 'block';
+            
+            setTimeout(() => {
+                let html = '';
+                
+                items.forEach(item => {
+                    html += `
+                        <div class="gallery-card" data-category="${item.category}">
+                            <div class="card-image">
+                                <img src="${item.image}" alt="${item.title}" loading="lazy">
+                                <div class="image-overlay">
+                                    <p><i class="fa-solid fa-calendar"></i> ${item.date}</p>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3>${item.title}</h3>
+                                <p>${item.description}</p>
+                                <div class="card-tags">
+                                    ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                galleryContainer.innerHTML = html;
+                loading.style.display = 'none';
+
+                // Add click event to all images for zoom
+                document.querySelectorAll('.card-image img').forEach(img => {
+                    img.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        modalImg.src = this.src;
+                        modal.classList.add('active');
+                    });
+                });
+            }, 500); // Simulasi loading
+        }
+
+        // Filter gallery
+        function filterGallery(category) {
+            currentFilter = category;
+            
+            if (category === 'all') {
+                renderGallery(galleryData);
+            } else {
+                const filtered = galleryData.filter(item => item.category === category);
+                renderGallery(filtered);
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalFoto = galleryData.length;
+            const totalProses = galleryData.filter(item => item.category === 'proses').length;
+            const totalKegiatan = galleryData.filter(item => item.category === 'kegiatan').length;
+            const totalTim = galleryData.filter(item => item.category === 'tim').length;
+
+            totalFotoEl.textContent = totalFoto;
+            totalProsesEl.textContent = totalProses;
+            totalKegiatanEl.textContent = totalKegiatan;
+            totalTimEl.textContent = totalTim;
+        }
+
+        // Event Listeners
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Filter gallery
+                const category = btn.dataset.filter;
+                filterGallery(category);
+            });
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initGallery);
+    </script>
+</body>
+</html>
