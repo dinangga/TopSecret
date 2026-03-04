@@ -390,6 +390,37 @@
             opacity: 1;
         }
 
+        .kerkom-btn {
+        display: inline-block;          /* Membuat link seperti tombol */
+        background-color: var(--accent-yellow); /* Warna cyan cerah */
+        color: var(--primary-pink);      /* Warna teks biru gelap */
+        padding: 8px 20px;              /* Ruang di dalam tombol */
+        margin-top: 12px;                /* Jarak dari teks di atasnya */
+        border-radius: 50px;             /* Membuat sudut sangat melengkung */
+        font-weight: 700;                /* Teks tebal */
+        font-size: 0.9rem;               /* Ukuran font */
+        text-transform: uppercase;       /* Huruf kapital semua (opsional) */
+        letter-spacing: 0.5px;           /* Jarak antar huruf */
+        border: 2px solid transparent;   /* Border transparan untuk hover */
+        transition: all 0.3s ease;       /* Animasi halus */
+        box-shadow: 0 4px 10px rgba(4, 178, 217, 0.3); /* Shadow sesuai tema */
+        text-decoration: none;           /* Menghilangkan garis bawah link */
+        }
+        /* Efek saat mouse diarahkan ke tombol */
+        .kerkom-btn:hover {
+        background-color: var(--primary-pink); /* Latar berubah jadi biru gelap */
+        color: var(--white);                    /* Teks jadi putih */
+        border-color: var(--accent-yellow);     /* Muncul border kuning */
+        transform: translateY(-3px);             /* Tombol terangkat */
+        box-shadow: 0 6px 15px rgba(4, 85, 191, 0.4); /* Shadow lebih besar */
+        }
+
+        /* Efek saat tombol diklik (opsional) */
+        .kerkom-btn:active {
+        transform: translateY(0);        /* Kembali ke posisi semula */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
         /* --- FOOTER --- */
         footer {
             background-color: var(--white);
@@ -630,7 +661,7 @@
                     <div class="overlay">
                         <h4>Sesi Belajar Kelompok</h4>
                         <p>Kolaborasi seru bersama teman.</p>
-                        <a href="kerkom1.html">klik untuk melihat</a>
+                        <a href="kerkom1.html" class="kerkom-btn">klik untuk melihat</a>
                     </div>
                 </div>
                 <div class="gallery-item">
@@ -638,7 +669,7 @@
                     <div class="overlay">
                         <h4>Logika Algoritma</h4>
                         <p>Belajar pola berpikir terstruktur dan kritis.</p>
-                        <a href="kerkom2.html">klik untuk melihat</a>
+                        <a href="kerkom1.html" class="kerkom-btn">klik untuk melihat</a>
                     </div>
                 </div>
                 <div class="gallery-item">
@@ -646,7 +677,7 @@
                     <div class="overlay">
                         <h4>Ekspresi NOVA</h4>
                         <p>Robot yang reaktif dan lucu.</p>
-                        <a href="kerkom3.html">klik untuk melihat</a>
+                        <a href="kerkom1.html" class="kerkom-btn">klik untuk melihat</a>
                     </div>
                 </div>
                 <div class="gallery-item">
@@ -654,7 +685,7 @@
                     <div class="overlay">
                         <h4>Waktu Bersama</h4>
                         <p>NOVA akan membuat waktu yang membosankan mu terasa menyenangkan.</p>
-                        <a href="kerkom4.html">klik untuk melihat</a>
+                        <a href="kerkom1.html" class="kerkom-btn">klik untuk melihat</a>
                     </div>
                 </div>
             </div>
