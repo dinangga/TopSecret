@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kodingan Alat NOVA - Kerkom 2</title>
+    <!-- Font Google: Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Prism.js untuk Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #020873;
+            --secondary-pink: #0455BF;
+            --accent-yellow: #04B2D9;
+            --soft-blue: #C7CEEA;
+            --white: #FFFFFF;
+            --text-dark: #4A4A4A;
+            --text-light: #7A7A7A;
+            --code-bg: #1E1E3F;
+            --shadow: 0 10px 30px rgba(4, 85, 191, 0.2);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .kerkom-header {
+            background: var(--primary-pink);
+            color: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-content h1 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-content h1 i {
+            color: var(--accent-yellow);
+        }
+
+        .back-btn {
+            background: var(--accent-yellow);
+            color: var(--primary-pink);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid transparent;
+        }
+
+        .back-btn:hover {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--accent-yellow);
+            transform: translateX(-5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--white);
+        }
+
+        .page-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Tab Navigation */
+        .tab-container {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: var(--soft-blue);
+            padding: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            border: none;
+            background: transparent;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-pink);
+            color: var(--white);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: var(--accent-yellow);
+            color: var(--primary-pink);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hardware Gallery */
+        .hardware-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .hardware-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .hardware-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 8, 115, 0.3);
+        }
+
+        .hardware-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hardware-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hardware-card:hover .hardware-img img {
+            transform: scale(1.1);
+        }
+
+        .hardware-info {
+            padding: 20px;
+        }
+
+        .hardware-info h3 {
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .hardware-info p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .spec-list {
+            list-style: none;
+        }
+
+        .spec-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .spec-list i {
+            color: var(--accent-yellow);
+            width: 20px;
+        }
+
+        /* Code Section */
+        .code-section {
+            background: var(--code-bg);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .code-title {
+            color: var(--white);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-title i {
+            color: var(--accent-yellow);
+        }
+
+        .copy-btn {
+            background: var(--accent-yellow);
+            color: var(--primary-pink);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary-pink);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        pre {
+            margin: 0 !important;
+            border-radius: 0 !important;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        /* Schematic Section */
+        .schematic-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .schematic-image {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .schematic-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .pinout-list {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .pinout-list h3 {
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pinout-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pinout-table th {
+            background: var(--soft-blue);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .pinout-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pinout-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
+            color: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+        }
+
+        .info-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .schematic-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-btn {
+                flex: none;
+                width: 100%;
+            }
+
+            .code-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .page-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="kerkom-header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fa-solid fa-microchip"></i>
+                    Kerkom 2 - Kodingan Alat NOVA
+                </h1>
+                <a href="index.html" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Title -->
+            <div class="page-title">
+                <h2>Hardware & Firmware NOVA</h2>
+                <p>Dokumentasi lengkap komponen hardware dan source code ESP32-S3</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-container">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="hardware">
+                        <i class="fa-solid fa-microchip"></i>
+                        Hardware
+                    </button>
+                    <button class="tab-btn" data-tab="code">
+                        <i class="fa-solid fa-code"></i>
+                        Source Code
+                    </button>
+                    <button class="tab-btn" data-tab="schematic">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        Skematik
+                    </button>
+                    <button class="tab-btn" data-tab="library">
+                        <i class="fa-solid fa-book"></i>
+                        Library
+                    </button>
+                </div>
+
+                <!-- Tab 1: Hardware -->
+                <div class="tab-content active" id="hardware">
+                    <h2 style="margin-bottom: 20px;">Komponen Hardware NOVA</h2>
+                    <div class="hardware-gallery">
+                        <div class="hardware-card">
+                            <div class="hardware-img">
+                                <img src="https://picsum.photos/seed/esp32/400/300" alt="ESP32-S3">
+                            </div>
+                            <div class="hardware-info">
+                                <h3>ESP32-S3 WROOM</h3>
+                                <p>Microcontroller utama dengan WiFi dan Bluetooth terintegrasi</p>
+                                <ul class="spec-list">
+                                    <li><i class="fa-solid fa-bolt"></i> 240 MHz dual-core</li>
+                                    <li><i class="fa-solid fa-memory"></i> 512KB SRAM, 8MB PSRAM</li>
+                                    <li><i class="fa-solid fa-wifi"></i> 2.4 GHz Wi-Fi</li>
+                                    <li><i class="fa-solid fa-bluetooth"></i> Bluetooth 5.0</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="hardware-card">
+                            <div class="hardware-img">
+                                <img src="https://picsum.photos/seed/oled/400/300" alt="OLED Display">
+                            </div>
+                            <div class="hardware-info">
+                                <h3>OLED 128x64</h3>
+                                <p>Layar OLED untuk menampilkan jam dan emoji</p>
+                                <ul class="spec-list">
+                                    <li><i class="fa-solid fa-maximize"></i> Resolusi 128x64</li>
+                                    <li><i class="fa-solid fa-sun"></i> Brightness tinggi</li>
+                                    <li><i class="fa-solid fa-bolt"></i> I2C interface</li>
+                                    <li><i class="fa-solid fa-battery-full"></i> Low power</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="hardware-card">
+                            <div class="hardware-img">
+                                <img src="https://picsum.photos/seed/mic/400/300" alt="Microphone">
+                            </div>
+                            <div class="hardware-info">
+                                <h3>MAX9814 Microphone</h3>
+                                <p>Microphone dengan amplifier untuk deteksi suara</p>
+                                <ul class="spec-list">
+                                    <li><i class="fa-solid fa-wave-square"></i> Gain 50dB</li>
+                                    <li><i class="fa-solid fa-chart-line"></i> Automatic gain control</li>
+                                    <li><i class="fa-solid fa-ear-listen"></i> Sensitivitas tinggi</li>
+                                    <li><i class="fa-solid fa-ban"></i> Noise cancellation</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="hardware-card">
+                            <div class="hardware-img">
+                                <img src="https://picsum.photos/seed/rtc/400/300" alt="RTC Module">
+                            </div>
+                            <div class="hardware-info">
+                                <h3>DS3231 RTC</h3>
+                                <p>Real Time Clock untuk menjaga akurasi jam</p>
+                                <ul class="spec-list">
+                                    <li><i class="fa-regular fa-clock"></i> Akurasi ±2ppm</li>
+                                    <li><i class="fa-solid fa-battery-full"></i> Battery backup</li>
+                                    <li><i class="fa-solid fa-temperature-high"></i> Temp sensor</li>
+                                    <li><i class="fa-regular fa-calendar"></i> Alarm & timer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Cards -->
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-microchip"></i>
+                            <h4>ESP32-S3</h4>
+                            <p>240MHz Dual-Core dengan AI Instructions</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-memory"></i>
+                            <h4>8MB PSRAM</h4>
+                            <p>Memori tambahan untuk buffer suara</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-wifi"></i>
+                            <h4>WiFi & BLE</h4>
+                            <p>Konektivitas wireless lengkap</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-bolt"></i>
+                            <h4>3.3V Logic</h4>
+                            <p>Low power consumption</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Source Code -->
+                <div class="tab-content" id="code">
+                    <h2 style="margin-bottom: 20px;">Source Code Firmware NOVA</h2>
+                    
+                    <!-- File 1: main.ino -->
+                    <div class="code-section" style="margin-bottom: 30px;">
+                        <div class="code-header">
+                            <div class="code-title">
+                                <i class="fa-regular fa-file-lines"></i>
+                                main.ino - Program Utama
+                            </div>
+                            <button class="copy-btn" onclick="copyCode('code1')">
+                                <i class="fa-regular fa-copy"></i>
+                                Salin Kode
+                            </button>
+                        </div>
+                        <pre><code class="language-cpp" id="code1">#include &lt;WiFi.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;RTClib.h&gt;
+
+// Pin definitions
+#define MIC_PIN 34
+#define BTN_LEFT 13
+#define BTN_RIGHT 14
+#define BTN_SELECT 27
+#define LED_PIN 2
+
+// OLED definitions
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// RTC object
+RTC_DS3231 rtc;
+
+// Menu states
+enum MenuState {
+    MENU_MAIN,
+    MENU_CLOCK,
+    MENU_SOUND,
+    MENU_GAME,
+    MENU_SETTINGS
+};
+
+MenuState currentState = MENU_MAIN;
+int menuIndex = 0;
+const char* mainMenu[] = {"Jam", "Suara", "Game", "Setting"};
+
+void setup() {
+    Serial.begin(115200);
+    
+    // Initialize pins
+    pinMode(MIC_PIN, INPUT);
+    pinMode(BTN_LEFT, INPUT_PULLUP);
+    pinMode(BTN_RIGHT, INPUT_PULLUP);
+    pinMode(BTN_SELECT, INPUT_PULLUP);
+    pinMode(LED_PIN, OUTPUT);
+    
+    // Initialize OLED
+    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+        Serial.println("OLED tidak ditemukan!");
+        while(1);
+    }
+    
+    // Initialize RTC
+    if (!rtc.begin()) {
+        Serial.println("RTC tidak ditemukan!");
+        while(1);
+    }
+    
+    if (rtc.lostPower()) {
+        rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    }
+    
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    
+    // Boot animation
+    bootAnimation();
+}
+
+void loop() {
+    handleButtons();
+    
+    switch(currentState) {
+        case MENU_MAIN:
+            drawMainMenu();
+            break;
+        case MENU_CLOCK:
+            drawClock();
+            break;
+        case MENU_SOUND:
+            drawSoundMeter();
+            break;
+        case MENU_GAME:
+            drawGame();
+            break;
+        case MENU_SETTINGS:
+            drawSettings();
+            break;
+    }
+    
+    delay(50);
+}
+
+void handleButtons() {
+    static unsigned long lastDebounceTime = 0;
+    const unsigned long debounceDelay = 200;
+    
+    if (digitalRead(BTN_LEFT) == LOW) {
+        if (millis() - lastDebounceTime > debounceDelay) {
+            lastDebounceTime = millis();
+            if (currentState == MENU_MAIN) {
+                menuIndex = (menuIndex - 1 + 4) % 4;
+            }
+        }
+    }
+    
+    if (digitalRead(BTN_RIGHT) == LOW) {
+        if (millis() - lastDebounceTime > debounceDelay) {
+            lastDebounceTime = millis();
+            if (currentState == MENU_MAIN) {
+                menuIndex = (menuIndex + 1) % 4;
+            }
+        }
+    }
+    
+    if (digitalRead(BTN_SELECT) == LOW) {
+        if (millis() - lastDebounceTime > debounceDelay) {
+            lastDebounceTime = millis();
+            if (currentState == MENU_MAIN) {
+                // Enter selected menu
+                switch(menuIndex) {
+                    case 0: currentState = MENU_CLOCK; break;
+                    case 1: currentState = MENU_SOUND; break;
+                    case 2: currentState = MENU_GAME; break;
+                    case 3: currentState = MENU_SETTINGS; break;
+                }
+            } else {
+                // Back to main menu
+                currentState = MENU_MAIN;
+            }
+        }
+    }
+}
+
+void drawMainMenu() {
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(20, 10);
+    display.println("NOVA");
+    
+    display.setTextSize(1);
+    display.setCursor(0, 40);
+    
+    for(int i = 0; i < 4; i++) {
+        if(i == menuIndex) {
+            display.print(">");
+        } else {
+            display.print(" ");
+        }
+        display.print(mainMenu[i]);
+        display.print("  ");
+    }
+    
+    display.display();
+}
+
+void drawClock() {
+    DateTime now = rtc.now();
+    
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(20, 10);
+    
+    // Format: HH:MM:SS
+    char timeStr[9];
+    sprintf(timeStr, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+    display.println(timeStr);
+    
+    display.setTextSize(1);
+    display.setCursor(25, 40);
+    
+    // Format: DD/MM/YYYY
+    char dateStr[11];
+    sprintf(dateStr, "%02d/%02d/%04d", now.day(), now.month(), now.year());
+    display.println(dateStr);
+    
+    display.display();
+}
+
+void drawSoundMeter() {
+    int soundValue = analogRead(MIC_PIN);
+    int barLength = map(soundValue, 0, 4095, 0, 120);
+    
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setCursor(0, 0);
+    display.print("Level Suara:");
+    
+    display.setCursor(0, 20);
+    display.print("Nilai: ");
+    display.print(soundValue);
+    
+    // Draw bar graph
+    display.fillRect(0, 40, barLength, 15, SSD1306_WHITE);
+    
+    // Draw emoji based on sound level
+    display.setCursor(0, 55);
+    if(soundValue < 1000) {
+        display.println("😊 Tenang");
+    } else if(soundValue < 2000) {
+        display.println("😐 Normal");
+    } else if(soundValue < 3000) {
+        display.println("😲 Ramai");
+    } else {
+        display.println("😱 BERISIK!");
+    }
+    
+    display.display();
+}
+
+void drawGame() {
+    static int score = 0;
+    static unsigned long lastGameUpdate = 0;
+    
+    if(millis() - lastGameUpdate > 100) {
+        lastGameUpdate = millis();
+        
+        // Simple reaction game
+        if(digitalRead(BTN_SELECT) == LOW) {
+            score++;
+            digitalWrite(LED_PIN, HIGH);
+            delay(50);
+            digitalWrite(LED_PIN, LOW);
+        }
+    }
+    
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setCursor(0, 10);
+    display.println("Reaction Game");
+    
+    display.setCursor(0, 30);
+    display.print("Score: ");
+    display.print(score);
+    
+    display.setCursor(0, 45);
+    display.println("Tekan SELECT!");
+    
+    display.display();
+}
+
+void drawSettings() {
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setCursor(0, 10);
+    display.println("Settings:");
+    display.setCursor(0, 25);
+    display.println("- Brightness");
+    display.setCursor(0, 35);
+    display.println- Sound Level");
+    display.setCursor(0, 45);
+    display.println("- About");
+    display.display();
+}
+
+void bootAnimation() {
+    for(int i = 0; i < 3; i++) {
+        display.clearDisplay();
+        display.setTextSize(2);
+        display.setCursor(20, 20);
+        display.println("NOVA");
+        display.display();
+        delay(500);
+        
+        display.clearDisplay();
+        display.setTextSize(1);
+        display.setCursor(10, 20);
+        display.println("Booting...");
+        display.display();
+        delay(500);
+    }
+}</code></pre>
+                    </div>
+
+                    <!-- File 2: config.h -->
+                    <div class="code-section">
+                        <div class="code-header">
+                            <div class="code-title">
+                                <i class="fa-regular fa-file-lines"></i>
+                                config.h - Konfigurasi
+                            </div>
+                            <button class="copy-btn" onclick="copyCode('code2')">
+                                <i class="fa-regular fa-copy"></i>
+                                Salin Kode
+                            </button>
+                        </div>
+                        <pre><code class="language-cpp" id="code2">// File: config.h
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// WiFi Configuration
+#define WIFI_SSID "NOVA_Robot"
+#define WIFI_PASSWORD "nova123456"
+
+// Pin Configuration
+#define PIN_MIC 34      // Microphone input
+#define PIN_LED 2       // Built-in LED
+#define PIN_BTN_LEFT 13 // Left button
+#define PIN_BTN_RIGHT 14 // Right button
+#define PIN_BTN_SELECT 27 // Select button
+
+// I2C Configuration
+#define I2C_SDA 21
+#define I2C_SCL 22
+
+// OLED Configuration
+#define OLED_ADDR 0x3C
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// RTC Configuration
+#define RTC_ADDR 0x68
+
+// Sound threshold levels
+#define SOUND_LOW 1000
+#define SOUND_MEDIUM 2000
+#define SOUND_HIGH 3000
+
+// Animation settings
+#define ANIMATION_SPEED 100
+#define BOOT_DELAY 500
+
+// EEPROM addresses
+#define EEPROM_BRIGHTNESS 0
+#define EEPROM_VOLUME 1
+#define EEPROM_WIFI_MODE 2
+
+// Version
+#define VERSION "1.0.0"
+#define BUILD_DATE __DATE__
+#define BUILD_TIME __TIME__
+
+#endif</code></pre>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Schematic -->
+                <div class="tab-content" id="schematic">
+                    <h2 style="margin-bottom: 20px;">Skematik Rangkaian</h2>
+                    
+                    <div class="schematic-container">
+                        <div class="schematic-image">
+                            <img src="https://picsum.photos/seed/schematic/600/400" alt="Skematik NOVA">
+                            <p style="text-align: center; margin-top: 10px;">Diagram Skematik Lengkap</p>
+                        </div>
+                        
+                        <div class="pinout-list">
+                            <h3><i class="fa-solid fa-plug"></i> Pinout ESP32-S3</h3>
+                            <table class="pinout-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pin</th>
+                                        <th>Function</th>
+                                        <th>Connected To</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>GPIO2</td><td>LED</td><td>Built-in LED</td></tr>
+                                    <tr><td>GPIO13</td><td>Button Left</td><td>Switch kiri</td></tr>
+                                    <tr><td>GPIO14</td><td>Button Right</td><td>Switch kanan</td></tr>
+                                    <tr><td>GPIO27</td><td>Button Select</td><td>Switch select</td></tr>
+                                    <tr><td>GPIO21</td><td>SDA</td><td>OLED & RTC</td></tr>
+                                    <tr><td>GPIO22</td><td>SCL</td><td>OLED & RTC</td></tr>
+                                    <tr><td>GPIO34</td><td>ADC</td><td>MAX9814 OUT</td></tr>
+                                    <tr><td>3.3V</td><td>Power</td><td>All components</td></tr>
+                                    <tr><td>GND</td><td>Ground</td><td>All components</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Power Diagram -->
+                    <div style="margin-top: 30px; background: white; padding: 20px; border-radius: 15px;">
+                        <h3 style="margin-bottom: 15px;">Diagram Power Supply</h3>
+                        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                            <div style="text-align: center;">
+                                <i class="fa-solid fa-battery-full" style="font-size: 3rem; color: var(--accent-yellow);"></i>
+                                <p>Battery 3.7V</p>
+                            </div>
+                            <div style="font-size: 2rem;">→</div>
+                            <div style="text-align: center;">
+                                <i class="fa-solid fa-bolt" style="font-size: 3rem; color: var(--secondary-pink);"></i>
+                                <p>TP4056 Charger</p>
+                            </div>
+                            <div style="font-size: 2rem;">→</div>
+                            <div style="text-align: center;">
+                                <i class="fa-solid fa-microchip" style="font-size: 3rem; color: var(--primary-pink);"></i>
+                                <p>MT3608 Boost<br>to 5V</p>
+                            </div>
+                            <div style="font-size: 2rem;">→</div>
+                            <div style="text-align: center;">
+                                <i class="fa-solid fa-circle-nodes" style="font-size: 3rem;"></i>
+                                <p>AMS1117<br>3.3V Regulator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Library -->
+                <div class="tab-content" id="library">
+                    <h2 style="margin-bottom: 20px;">Library yang Digunakan</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-brands fa-arduino" style="font-size: 2rem; color: var(--primary-pink);"></i>
+                            <h3 style="margin: 10px 0;">Adafruit SSD1306</h3>
+                            <p>Library untuk mengontrol OLED display via I2C/SPI</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">v2.5.0</span>
+                                <span class="tag">Graphics</span>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-regular fa-clock" style="font-size: 2rem; color: var(--secondary-pink);"></i>
+                            <h3 style="margin: 10px 0;">RTClib</h3>
+                            <p>Library untuk RTC DS3231 dan DS1307</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">v2.0.2</span>
+                                <span class="tag">Time</span>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-solid fa-wifi" style="font-size: 2rem; color: var(--accent-yellow);"></i>
+                            <h3 style="margin: 10px 0;">WiFi.h</h3>
+                            <p>Library bawaan ESP32 untuk konektivitas WiFi</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">Built-in</span>
+                                <span class="tag">ESP32</span>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-solid fa-bluetooth" style="font-size: 2rem; color: var(--primary-pink);"></i>
+                            <h3 style="margin: 10px 0;">BluetoothSerial.h</h3>
+                            <p>Library untuk komunikasi Bluetooth Serial</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">Built-in</span>
+                                <span class="tag">BLE</span>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-solid fa-chart-line" style="font-size: 2rem; color: var(--secondary-pink);"></i>
+                            <h3 style="margin: 10px 0;">ArduinoFFT</h3>
+                            <p>Library untuk analisis frekuensi suara</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">v1.5.0</span>
+                                <span class="tag">DSP</span>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <i class="fa-regular fa-face-smile" style="font-size: 2rem; color: var(--accent-yellow);"></i>
+                            <h3 style="margin: 10px 0;">EmojiFont.h</h3>
+                            <p>Custom library untuk menampilkan emoji di OLED</p>
+                            <div style="margin-top: 15px;">
+                                <span class="tag">Custom</span>
+                                <span class="tag">Fonts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Installation Guide -->
+                    <div style="margin-top: 30px; background: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="margin-bottom: 20px;">Cara Install Library</h3>
+                        <pre style="background: #f5f5f5; padding: 15px; border-radius: 10px;"><code>// Melalui Arduino Library Manager
+1. Buka Arduino IDE
+2. Tools → Manage Libraries
+3. Cari "Adafruit SSD1306"
+4. Klik Install
+5. Ulangi untuk library lainnya
+
+// Atau melalui GitHub
+1. Download ZIP dari repository
+2. Sketch → Include Library → Add .ZIP Library
+3. Pilih file ZIP yang sudah didownload</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="kerkom-footer">
+        <div class="container">
+            <p>&copy; 2026 NOVA Robot - Dokumentasi Kodingan Alat Kerkom 2. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    // Show corresponding content
+                    const tabId = btn.dataset.tab;
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+
+        // Copy code function
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const textArea = document.createElement('textarea');
+            textArea.value = codeElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Show feedback
+            alert('Kode berhasil disalin!');
+        }
+
+        // Smooth scroll untuk anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
