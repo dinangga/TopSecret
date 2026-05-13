@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Halaman Dalam Pengembangan - NOVA Robot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0E27;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1F3A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #04B2D9;
+            border-radius: 10px;
+        }
+
+        /* gradient text utility */
+        .gradient-text {
+            background: linear-gradient(135deg, #04B2D9 0%, #7B2CBF 50%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(4, 178, 217, 0.2);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #04B2D9, #7B2CBF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            background: none;
+            color: #04B2D9;
+            -webkit-background-clip: unset;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #E0E0FF;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #04B2D9;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #04B2D9, #7B2CBF);
+            padding: 10px 28px;
+            border-radius: 50px;
+            color: white !important;
+            font-weight: 700;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(4, 178, 217, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #04B2D9;
+        }
+
+        /* ========== 501 MAIN CONTENT ========== */
+        .error-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at 30% 10%, #0A0E27, #05071A);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* background animation */
+        .bg-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .bg-animation span {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(4, 178, 217, 0.3);
+            border-radius: 50%;
+            animation: floatParticles 8s infinite;
+        }
+
+        @keyframes floatParticles {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .error-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .code-container {
+            margin-bottom: 32px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .error-code {
+            font-size: 12rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #04B2D9, #7B2CBF, #FF6B6B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 20px;
+            text-shadow: 0 0 50px rgba(4, 178, 217, 0.3);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(4, 178, 217, 0.3); }
+            50% { text-shadow: 0 0 50px rgba(4, 178, 217, 0.6); }
+        }
+
+        .error-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(4, 178, 217, 0.15);
+            border: 1px solid rgba(4, 178, 217, 0.4);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 32px;
+            backdrop-filter: blur(4px);
+        }
+
+        .error-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+            color: #B0B4D4;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 4px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #04B2D9, #7B2CBF);
+            border-radius: 50px;
+            height: 8px;
+            width: 68%;
+            position: relative;
+            animation: progressPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #B0B4D4;
+            margin-top: 12px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #04B2D9, #7B2CBF);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(4, 178, 217, 0.4);
+        }
+
+        .btn-outline-light {
+            border: 2px solid rgba(4, 178, 217, 0.6);
+            background: transparent;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-outline-light:hover {
+            border-color: #04B2D9;
+            background: rgba(4, 178, 217, 0.1);
+        }
+
+        /* robot illustration */
+        .robot-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #06081A;
+            padding: 40px 0 25px;
+            border-top: 1px solid rgba(4, 178, 217, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .copyright {
+            color: #B0B4D4;
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            background: rgba(4, 178, 217, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            color: #04B2D9;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: #04B2D9;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+                letter-spacing: 10px;
+            }
+
+            .error-title {
+                font-size: 1.8rem;
+            }
+
+            .error-description {
+                font-size: 1rem;
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #0A0E27;
+                flex-direction: column;
+                justify-content: center;
+                transition: 0.4s;
+                gap: 30px;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .button-group {
+                gap: 16px;
+                padding: 0 16px;
+            }
+
+            .btn-primary, .btn-outline-light {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+                letter-spacing: 5px;
+            }
+
+            .robot-icon {
+                font-size: 3.5rem;
+            }
+
+            .error-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i> NOVA
+            </div>
+            <div class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="host.html">Beranda</a>
+                <a href="host.html">Fitur</a>
+                <a href="host.html">Cara Kerja</a>
+                <a href="host.html">Galeri</a>
+                <a href="host.html">Testimoni</a>
+                <a href="host.html" class="nav-cta">Beli Sekarang</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="error-section">
+    <div class="bg-animation" id="particles"></div>
+    <div class="container">
+        <div class="error-content">
+
+            <div class="code-container">
+                <div class="error-code">501</div>
+            </div>
+            <div class="error-badge">
+                <i class="fa-solid fa-code-branch"></i> Not Implemented
+            </div>
+            <h1 class="error-title">Halaman <span class="gradient-text">Sedang Dibangun</span></h1>
+            <p class="error-description">
+                Maaf, halaman yang Anda tuju sedang dalam tahap pengembangan. 
+                Tim kami sedang bekerja keras untuk menghadirkan fitur terbaik untuk Anda.
+            </p>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="progress-text">
+                    <i class="fa-regular fa-clock"></i> Progress pengembangan: 68%
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <a href="host.html" class="btn-primary">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+                </a>
+                <a href="#" class="btn-outline-light">
+                    <i class="fa-regular fa-bell"></i> 
+                </a>
+            </div>
+            
+            <p style="margin-top: 48px; font-size: 0.85rem; color: #6B6F96;">
+                <i class="fa-solid fa-circle-question"></i> Kode error 501 berarti server belum mengimplementasikan fungsionalitas yang diminta.
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2026 NOVA Robot. All rights reserved.
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Floating particles animation
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('span');
+        const size = Math.random() * 4 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 8}s`;
+        particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
+        particlesContainer.appendChild(particle);
+    }
+</script>
+</body>
+</html>
