@@ -232,11 +232,16 @@
             color: white;
             text-decoration: none;
             transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
         }
 
         .btn-outline-light:hover {
             border-color: #04B2D9;
             background: rgba(4, 178, 217, 0.1);
+            transform: translateY(-3px);
         }
 
         .hero-stats {
@@ -295,6 +300,118 @@
 
         .card1 { top: -20px; right: -20px; animation-delay: 0s; }
         .card2 { bottom: 30px; left: -30px; animation-delay: 1s; }
+
+        /* ========== MODAL VIDEO STYLES ========== */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-video {
+            width: 100%;
+            display: block;
+            border-radius: 28px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: linear-gradient(135deg, #04B2D9, #7B2CBF);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            z-index: 2001;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: #FF6B6B;
+        }
+
+        .modal-back-btn {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 32px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .modal-back-btn:hover {
+            background: rgba(4, 178, 217, 0.8);
+            transform: translateX(-50%) translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .close-modal {
+                top: -40px;
+                right: 5px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            .modal-back-btn {
+                bottom: -50px;
+                padding: 10px 24px;
+                font-size: 0.9rem;
+            }
+        }
 
         /* ========== FEATURES ========== */
         .features {
@@ -744,19 +861,21 @@
                 <p>NOVA hadir dengan kecerdasan AI emosional, layar OLED interaktif, dan 100+ ekspresi lucu. Teman setia yang selalu menemani harimu.</p>
                 <div class="hero-buttons">
                     <a href="#beli" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Pesan Sekarang</a>
-                    <a href="#demo" class="btn-outline-light"><i class="fa-regular fa-circle-play"></i> Lihat Demo</a>
+                    <button class="btn-outline-light" id="demoBtn">
+                        <i class="fa-regular fa-circle-play"></i> Lihat Demo
+                    </button>
                 </div>
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-number">1.2k+</div>
-                        <div class="stat-label">Pengguna Aktif</div>
+                        <div class="stat-number">1+</div>
+                        <div class="stat-label">Pembeli</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">98%</div>
+                        <div class="stat-number">96%</div>
                         <div class="stat-label">Kepuasan</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-number">24/7</div>
+                        <div class="stat-number">12/7</div>
                         <div class="stat-label">Dukungan</div>
                     </div>
                 </div>
@@ -775,6 +894,22 @@
         </div>
     </div>
 </section>
+
+<!-- Modal Video Popup -->
+<div class="video-modal" id="videoModal">
+    <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        <video class="modal-video" id="demoVideo" controls autoplay>
+            <source src="demo.mp4" type="video/mp4">
+            Browser Anda tidak mendukung video tag.
+        </video>
+        <button class="modal-back-btn" id="backFromVideoBtn">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+        </button>
+    </div>
+</div>
 
 <!-- Features Section -->
 <section class="features" id="features">
@@ -992,17 +1127,68 @@
         });
     });
 
+    // Video Modal Functionality
+    const demoBtn = document.getElementById('demoBtn');
+    const videoModal = document.getElementById('videoModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const backFromVideoBtn = document.getElementById('backFromVideoBtn');
+    const demoVideo = document.getElementById('demoVideo');
+
+    // Function to open modal
+    function openModal() {
+        videoModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // Auto play video when modal opens
+        setTimeout(() => {
+            demoVideo.play().catch(e => console.log('Auto-play prevented:', e));
+        }, 100);
+    }
+
+    // Function to close modal
+    function closeModal() {
+        videoModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        // Pause video when closing
+        demoVideo.pause();
+        demoVideo.currentTime = 0;
+    }
+
+    // Event listeners
+    demoBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    backFromVideoBtn.addEventListener('click', () => {
+        closeModal();
+        // Optional: scroll to top or just close
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Close modal when clicking outside the video content
+    videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+            closeModal();
+        }
+    });
+
+    // Escape key to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+            closeModal();
+        }
+    });
+
     // Floating particles animation
     const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 60; i++) {
-        const particle = document.createElement('span');
-        const size = Math.random() * 4 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.animationDelay = `${Math.random() * 8}s`;
-        particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
-        particlesContainer.appendChild(particle);
+    if (particlesContainer) {
+        for (let i = 0; i < 60; i++) {
+            const particle = document.createElement('span');
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 8}s`;
+            particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
+            particlesContainer.appendChild(particle);
+        }
     }
 
     // Smooth scroll for anchor links
@@ -1018,4 +1204,3 @@
 </script>
 </body>
 </html>
-```
